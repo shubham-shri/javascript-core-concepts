@@ -35,7 +35,7 @@ printMyNameWithMyBind('Patna')
 
 // method 1 - using bind method
 let multiply = function (x, y) {
-  console.log(x * y)
+  // console.log(x * y)
 }
 let multiplyByTwo = multiply.bind(this, 2)
 multiplyByTwo(3) // returns 6
@@ -48,3 +48,21 @@ let multiplyClosure = function (x) {
 }
 let multiplyByTwoClosure = multiplyClosure(2)
 multiplyByTwoClosure(3)
+
+// ----------------------------------------- Debouncing -----------------------------------------
+let counter = 0
+function apiHit(...args) {
+  console.log('apiHit', counter++, ...args)
+}
+
+function debounce(fn, delay) {
+  let ref = this
+  let timer
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.call(ref, ...args)
+    }, delay)
+  }
+}
+const debounceApiHit = debounce(apiHit, 2000)
